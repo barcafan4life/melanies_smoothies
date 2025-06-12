@@ -1,12 +1,9 @@
 # Import python packages
 import streamlit as st
-from snowflake.snowpark.functions import col
-#New section to display smoothiefroot nutrition information
 import requests
-smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-#st.text(smoothiefroot_response.json())
+from snowflake.snowpark.functions import col
 
-sf_df = st.dataframe(data=smoothiefroot_response.json(),use_container_width=True)
+
 
 
 
@@ -37,11 +34,13 @@ if ingredients_list:
     order_filled = False
     
     for fruit_chosen in ingredients_list:
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+        sf_df = st.dataframe(data=smoothiefroot_response.json(),use_container_width=True)
         ingredients_string += fruit_chosen + ' '
     
-    #st.write(ingredients_string)
+        #st.write(ingredients_string)
     
-    my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
+        my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
             values ('""" + ingredients_string + """','""" + name_on_orders + """')"""
 
     #st.write(my_insert_stmt)
