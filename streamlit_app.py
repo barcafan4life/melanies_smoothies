@@ -4,6 +4,7 @@ from snowflake.snowpark.functions import col
 #New section to display smoothiefroot nutrition information
 import requests
 smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+st.text(smoothiefroot_response.json())
 
 
 
@@ -51,5 +52,4 @@ if ingredients_list:
         session.sql(my_insert_stmt).collect()
         st.success('Your Smoothie is ordered, ' + name_on_orders + '!', icon="✅")
 
-st.text(smoothiefroot_response.json())
 
